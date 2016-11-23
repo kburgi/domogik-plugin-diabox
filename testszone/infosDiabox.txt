@@ -1,0 +1,56 @@
+
+
+ http://data.diabox.com/dataPartGeneration.php/?id=11&interval=second&period=120
+
+http://avelet.diabox.com/dataUpdate.php?dbx_id=11&dataName=      
+dataName A TROUVER => chercher dans le code "addGauge"
+
+function unitChange() {
+	var myTempSelect = document.getElementById("temp").value;
+	var myWindSelect = document.getElementById("wind").value;
+	var myDbxId = getQuerystring("id");
+	var myTemplate = getQuerystring("template", null);
+	var url = '?id='+myDbxId+'&unitTemp='+myTempSelect+'&unitWind='+myWindSelect;
+	if ((myTemplate != null) && (myTemplate != "")) {
+		url = url+'&template='+myTemplate;
+	}
+	window.location.replace(url);
+
+}
+
+
+##### PHARE DU MINOU #########
+# ID = 11
+
+http://avelet.diabox.com/dataUpdate.php?dbx_id=11&dataName=minou_d_temperature
+
+list of dataName : 
+- minou_d_temperature  (°C)
+- minou_d_pressure     (hPa)
+- minou_d_wind_rt   (direction [°] et vitesse en [kts])
+- minou_d_humidity   (%)
+- minou_d_rain       (mm/h)
+
+##### PHARE DE l'ILE WRACH #########
+# ID = 17
+
+http://avelet.diabox.com/dataUpdate.php?dbx_id=17&dataName=wrach_wind_rt
+
+list of dataName : 
+- wrach_temperature  (°C)
+- wrach_pressure     (hPa)
+- wrach_wind_rt   (direction [°] et vitesse en [kts])
+- wrach_humidity   (%)
+- wrach_rainRate       (mm/h)
+
+##### KERMOVAN #########
+# ID = 15
+
+http://avelet.diabox.com/dataUpdate.php?dbx_id=15&dataName=kermorvan_temperature
+
+list of dataName : 
+- kermorvan_temperature  (°C)
+- kermorvan_pressure     (hPa)
+- kermorvan_wind_rt   (direction [°] et vitesse en [kts])
+- kermorvan_humidity   (%)
+- kermorvan_rainRate       (mm/h)
