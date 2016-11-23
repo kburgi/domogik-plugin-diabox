@@ -1,23 +1,20 @@
+##########################################################
+# récupérer les data diabox sous forme d'historique :
 
+ http://data.diabox.com/dataPartGeneration.php/?id=11&interval=hourly&period=120
 
- http://data.diabox.com/dataPartGeneration.php/?id=11&interval=second&period=120
-
+ interval : day ou hourly
+ preiod : délai entre 2 valeurs en secondes !
+ 
+##########################################################
+# récupérer le dernier live :
+ 
 http://avelet.diabox.com/dataUpdate.php?dbx_id=11&dataName=      
-dataName A TROUVER => chercher dans le code "addGauge"
+dataName A TROUVER => chercher dans le code "addGauge" du script
 
-function unitChange() {
-	var myTempSelect = document.getElementById("temp").value;
-	var myWindSelect = document.getElementById("wind").value;
-	var myDbxId = getQuerystring("id");
-	var myTemplate = getQuerystring("template", null);
-	var url = '?id='+myDbxId+'&unitTemp='+myTempSelect+'&unitWind='+myWindSelect;
-	if ((myTemplate != null) && (myTemplate != "")) {
-		url = url+'&template='+myTemplate;
-	}
-	window.location.replace(url);
 
-}
 
+############## LISTE DES DIABOX RECUPERER ########################
 
 ##### PHARE DU MINOU #########
 # ID = 11
