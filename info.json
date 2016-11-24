@@ -1,0 +1,112 @@
+{
+	"json_version": 2,
+	"identity": {
+		"author": "kbu",
+		"author_email": "kbu at kbulabs dot fr",
+		"tags": ["weather"],
+		"dependencies": [
+			{
+				"id": "PyMySQL (>=0.7)",
+				"type": "python"
+			}		
+		],
+		"description": "This plugin takes live weather condition from diabox website",
+		"domogik_min_version": "0.5",
+		"name": "diabox",
+		"type": "plugin",
+		"version": "0.0a"
+	},
+    	"configuration": [
+	    {
+		"default": 60,
+		"description": "Interval between each poll (secondes)",
+		"key": "interval",
+		"name": "Interval",
+		"required": false,
+		"type": "integer"
+	    }
+	],
+    	"commands": {},
+    	"xpl_commands": {},
+    	"sensors": {
+		"papp": {
+		    "name": "papp",
+		    "data_type": "DT_ActiveEnergy",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": true,
+			"max": 0,
+			"expire": 0,
+			"round_value": 0
+		    }
+		}
+	},
+    	"xpl_stats": {
+		"teleinfo": {
+		    "name": "Teleinfo",
+		    "schema": "teleinfo.basic",
+		    "parameters": {
+			"static": [],
+			"device": [],
+			"dynamic": [
+			    {
+				    "key": "optarif",
+				    "ignore_values": "",
+				    "sensor": "optarif"
+			    },
+			    {
+				    "key": "hchp",
+				    "ignore_values": "",
+				    "sensor": "hchp"
+			    },
+			    {
+				    "key": "hchc",
+				    "ignore_values": "",
+				    "sensor": "hchc"
+			    },
+			    {
+				    "key": "ptec",
+				    "ignore_values": "",
+				    "sensor": "ptec"
+			    },
+			    {
+				    "key": "inst1",
+				    "ignore_values": "",
+				    "sensor": "inst1"
+			    },
+			    {
+				    "key": "imax1",
+				    "ignore_values": "",
+				    "sensor": "imax1"
+			    },
+			    {
+				    "key": "papp",
+				    "ignore_values": "",
+				    "sensor": "papp"
+			    }
+			]
+		    }
+		}	
+	},
+    	"device_types": {
+        	"teleinfo.electric_meter": {
+			"description": "Teleinformation from MySQL database",
+			"id": "teleinfo.electric_meter",
+			"name": "Teleinformation",
+			"commands": [],
+			"sensors": ["optarif", "hchp", "hchc", "ptec", "inst1", "imax1", "papp"],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each check\n (In my config, Arduino saves data in mysql every 30s...)",
+				    "type": "integer"
+				}
+			    ]
+			}
+
+	}
+}	
