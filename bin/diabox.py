@@ -115,8 +115,8 @@ class DiaboxManager(XplPlugin):
 
     def send_xpl(self, domo_dev_id, dbx_station_name, sensor_name, sensor_type, sensor_value):
         """ send xPL on the network """
-        self.log.debug("Will send an xPL msg with a line of diabox data")
-        self.log.debug("value are : [domo_dev_id=\"{}\"][dbx=\"{}\"][type=\"{}\"][val=\"{}\""
+        self.log.debug("Will send an xPL msg with a line of diabox data... see line below")
+        self.log.debug("[domo_dev_id=\"{}\"][dbx=\"{}\"][type=\"{}\"][val=\"{}\"]"
                         .format(domo_dev_id, dbx_station_name, sensor_type, sensor_value))
         # creation du message xPL
         msg = XplMessage()
