@@ -257,6 +257,28 @@
 				    "type": "integer"
 				}
 			]
+		},
+        	"diabox.wrach": {
+			"description": "Diabox au phare de l'île Wrac'h",
+			"id": "diabox.wrach",
+			"name": "Phare de l'île Wrac'h",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}
+			]
 		}
 	}		
 }	

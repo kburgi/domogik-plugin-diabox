@@ -54,17 +54,22 @@ class DiaboxManager(XplPlugin):
         XplPlugin.__init__(self, name='diabox')
 
         # check if the plugin is configured. If not, this will stop the plugin and log an error
-        if not self.check_configured():
-            return
+        #if not self.check_configured():
+        #    return
         
         self.devices = self.get_device_list(quit_if_no_device = False)
+
+        self.log.debug("---------------------------- HERE ----------------------------------")
 
         threads = {}
         for dev in self.devices:
             try:
-                if not self.check_configured():
-                    self.log.error("Device {} is not configured !".format(dev['name']))
-                    return
+                self.log.debug("--------- INIT DEVICE \"{}\" ------------------".format(dev['name']))
+#                self.log.debug("---------- test device configured ---------------")
+#                self.log.error("Is device {} configured ?".format(dev['name']))
+#                if not self.check_configured():
+#                    self.log.error("Device {} is not configured !".format(dev['name']))
+#                    return
 
                 dbx_domo_id=dev['id']
 
@@ -72,7 +77,9 @@ class DiaboxManager(XplPlugin):
                 if refresh_interval == None:
                     self.log.error("Interval \"{}\" is invalid for device \"{}\"".format(refresh_interval, dev['name']))                
                     return
+                self.log.debug("Dev={}  Config refresh interval = {}".format(dev['name'], refresh_interval))
 
+                self.log.debug("------- Calling manager => DiaboxLib  -------------")
                 self._diabox_manager = DiaboxLib(self.log, self.send_xpl, self.get_stop(), dbx_domo_id )
                 self.add_stop_cb(self._diabox_manager.stop)
 
