@@ -65,6 +65,17 @@ class DiaboxManager(XplPlugin):
         for dev in self.devices:
             try:
                 self.log.debug("--------- INIT DEVICE \"{}\" ------------------".format(dev['name']))
+                #print dev
+                #print "--------------------"
+                #print "dev['{}']={}".format("description", dev['description'])
+
+
+                # need to now which station to catch right diabox variable in diaboxconfig
+                self.log.info("Config : diabox station type \"{}\"".format(dev['device_type_id']))
+                self.log.info("Config : diabox description \"{}\"".format(dev['description']))
+                #print "dev['{}']={}".format("device_type_id", dev['device_type_id'])
+
+
 #                self.log.debug("---------- test device configured ---------------")
 #                self.log.error("Is device {} configured ?".format(dev['name']))
 #                if not self.check_configured():
@@ -80,7 +91,8 @@ class DiaboxManager(XplPlugin):
                 self.log.debug("Dev={}  Config refresh interval = {}".format(dev['name'], refresh_interval))
 
                 self.log.debug("------- Calling manager => DiaboxLib  -------------")
-                self._diabox_manager = DiaboxLib(self.log, self.send_xpl, self.get_stop(), dbx_domo_id )
+                # note : device_type_id = diabox.minou / diabox.wrach / etc => required for diaboxconfig module
+                self._diabox_manager = DiaboxLib(self.log, self.send_xpl, self.get_stop(), dev['device_type_id'], dev["id"], refresh_interval)
                 self.add_stop_cb(self._diabox_manager.stop)
 
                 thr_name = "diabox_{}".format(dev['name'])
@@ -88,7 +100,7 @@ class DiaboxManager(XplPlugin):
                 threads[thr_name] = threading.Thread(None,
                                                     self._diabox_manager.get_diabox_data,
                                                     thr_name,
-                                                    (refresh_interval,),
+                                                    (),
                                                     {})
                 threads[thr_name].start()
                 self.register_thread(threads[thr_name])
@@ -101,20 +113,21 @@ class DiaboxManager(XplPlugin):
         self.ready()
 
 
-    def send_xpl(self, dbx_dev, dbx_type, dbx_value):
+    def send_xpl(self, domo_dev_id, dbx_station_name, sensor_name, sensor_type, sensor_value):
         """ send xPL on the network """
-        self.log.debug("Send xPL msg with a line of diabox data")
-        self.log.debug("with value : {}  {}  {}".format(dbx_dev, dbx_type, dbx_value))
+        self.log.debug("Will send an xPL msg with a line of diabox data")
+        self.log.debug("value are : [domo_dev_id=\"{}\"][dbx=\"{}\"][type=\"{}\"][val=\"{}\""
+                        .format(domo_dev_id, dbx_station_name, sensor_type, sensor_value))
         # creation du message xPL
         msg = XplMessage()
         msg.set_type("xpl-stat")
         msg.set_schema("sensor.basic")
-        #msg.add_data({"timestamp" : teleinfo["timestamp"]})
-        msg.add_data({"device" : dbx_dev})
-        msg.add_data({"type" : dbx_type })
-        msg.add_data({"current" : dbx_value})
+        msg.add_data({"device" : domo_dev_id})
+        msg.add_data({"type" : sensor_type })
+        msg.add_data({"current" : sensor_value})
 
         try:
+            self.log.debug("Now trying to send the xpl msg...")
             self.myxpl.send(msg)
         except XplMessageError: 
             self.log.debug(u"Bad xpl message to send. Xpl message is : {0}".format(str(msg)))

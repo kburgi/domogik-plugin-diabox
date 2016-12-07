@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*-coding:Utf-8 -*
 
+# here are variable used in diabox website
+
 minou={}
-minou["domo_id"]="diabox.minou"  #domogik json id
+minou["dev_type"]="diabox.minou"  #domogik json id
 minou["name"]="minou"
 minou["id"]="11"
 minou["temperature"]="minou_d_temperature"
@@ -13,7 +15,7 @@ minou["humidity"]="minou_d_humidity"
 minou["rain_rate"]="minou_d_rain"
 
 wrach={}
-wrach["domo_id"]="diabox.wrach"  #domogik json id
+wrach["dev_type"]="diabox.wrach"  #domogik json id
 wrach["name"]="wrach"
 wrach["id"]="17"
 wrach["temperature"]="wrach_temperature"
@@ -30,14 +32,16 @@ list_diabox = [ minou, wrach ]
 class DiaboxConfig():
     """ List of all diabox config """
 
-    def __init__(self, dbx_domo_id):
+    def __init__(self, dev_type, domo_log):
+        self.domo_log = domo_log
         
-        cfg = self.get_dbx_config(dbx_domo_id)
+        #get the config of the diabox station
+        cfg = self.get_dbx_config(dev_type)
         if cfg == None:
             self.isValid=False
         else:
-            self.dbx_name = cfg["name"]
-            self.rid = cfg["id"]   # """remote id"""
+            self.station_name = cfg["name"]
+            self.station_id = cfg["id"]   # This is remote id, on diabox website !
             self.url_temperature = self.get_remote_url(cfg["id"], cfg["temperature"])
             self.url_pressure = self.get_remote_url(cfg["id"], cfg["pressure"])
             self.url_wind_speed = self.get_remote_url(cfg["id"], cfg["wind_speed_kts"])
@@ -46,30 +50,21 @@ class DiaboxConfig():
             self.url_rain_rate = self.get_remote_url(cfg["id"], cfg["rain_rate"])
             self.isValid=True
 
-
-    def __repr__(self):        
-        isDbPwdSet = self._pwd is not ""
-        msg = "db.host(\"{}\"), db_login(\"{}\", " + \
-                "db_pwd_isSet(\"{}\"), db_dbname(\"{}\") " + \
-                "db_tablename(\"{}\")" \
-                .format(self._host, self._login, isDbPwdSet, self._dbname, self._tablename)
-        return msg
-
-    def get_dbx_config(self, dbx_domo_id):
-        """ Iteration over list_diabox to get config """
+    def get_dbx_config(self, dev_type):
+        """ Iteration over list_diabox to get config for dev_type (diabox.minou / diabox.wrach / ...) """
         for dbx in list_diabox:
-            if dbx_domo_id == dbx["domo_id"]:
-                print "DEBUG : diabox config found for dbx_name = {}".format(dbx["name"])
+            if dev_type == dbx["dev_type"]:
+                self.domo_log.info("Diabox config found ! It's the station \"{}\" ! :-)".format(dbx["name"]))
+                #print "debug : diabox config found for dbx_name = {}".format(dbx["name"])
                 return dbx
-        print "ERROR : diabox config not found for diabox dbx_domo_id=\"{}\" !".format(dbx_domo_id)
-        print "ERROR => Exiting"
-        return 
+        self.domo_log.error("No Diabox config correspondance for diabox_type=\"{}\" !!!!".format(dev_type))
+        return None
 
-    def get_remote_url(self, dbx_rid, dbx_remote_sensor_var):
+    def get_remote_url(self, dbx_remote_id, dbx_remote_sensor_var):
         url = "http://avelet.diabox.com/dataUpdate.php?dbx_id={}&dataName={}" \
-               .format(dbx_rid, dbx_remote_sensor_var)
-        print "DEBUG : get_url for diabox {} is :\n".format(self._dbx_name)
-        print "DEBUG : {}".format(url)
+               .format(dbx_remote_id, dbx_remote_sensor_var)
+        #self.domo_log.debug("[DEBUG URL] get_url for diabox {} is :\n".format(self.station_name))
+        #self.domo_log.debug("[DEBUG URL] : {}".format(url))
         return url
 
 
