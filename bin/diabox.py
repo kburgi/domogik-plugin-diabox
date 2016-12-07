@@ -40,7 +40,7 @@ and domogik
 from domogik.xpl.common.xplmessage import XplMessage
 from domogik.xpl.common.plugin import XplPlugin
 
-from domogik_packages.plugin_diabox.lib.diabox import Diabox
+from domogik_packages.plugin_diabox.lib.diaboxlib import DiaboxLib
 
 import threading
 import traceback
@@ -59,60 +59,53 @@ class DiaboxManager(XplPlugin):
         
         self.devices = self.get_device_list(quit_if_no_device = False)
 
-        mysql_host = self.get_config("mysql_host")
-        if mysql_host == None:
-            self.log.error("Mysql_host seems to be missconfigured ! Check it please ! :-/")
-            return
-
-        #put a hard interval
-        #interval = 30     
-        
         threads = {}
         for dev in self.devices:
             try:
                 if not self.check_configured():
                     self.log.error("Device {} is not configured !".format(dev['name']))
                     return
-                interval = self.get_parameter(dev, "interval")
-                if interval == None:
-                    self.log.error("Interval \"{}\" is invalid for device \"{}\"".format(interval, dev['name']))
+
+                dbx_domo_id=dev['id']
+
+                refresh_interval = self.get_parameter(dev,"interval")
+                if refresh_interval == None:
+                    self.log.error("Interval \"{}\" is invalid for device \"{}\"".format(refresh_interval, dev['name']))                
                     return
 
-                self._timysql_manager = TeleinfoMysql(self.log, self.send_xpl, self.get_stop(), mysql_host, mysql_db, mysql_table, mysql_login, mysql_pwd )
-                self.add_stop_cb(self._timysql_manager.stop)
+                self._diabox_manager = DiaboxLib(self.log, self.send_xpl, self.get_stop(), dbx_domo_id )
+                self.add_stop_cb(self._diabox_manager.stop)
 
-                thr_name = "dev_{}".format(dev['id'])
-                self.log.info("[Starting thread {}] Start fetching teleinfo data from mysql for device {}".format(thr_name, dev['name']))
+                thr_name = "diabox_{}".format(dev['name'])
+                self.log.info("[Starting thread {}] Start fetching diabox data".format(thr_name))
                 threads[thr_name] = threading.Thread(None,
-                                                    self._timysql_manager.get_last_teleinfo,
+                                                    self._diabox_manager.get_diabox_data,
                                                     thr_name,
-                                                    (interval,),
+                                                    (refresh_interval,),
                                                     {})
                 threads[thr_name].start()
                 self.register_thread(threads[thr_name])
             except:
                 self.log.error("{0}".format(traceback.format_exc()))
-                self.log.error("ERROR : exit plugin timysql")
+                self.log.error("ERROR : exit plugin diabox")
                 return
 
         self.log.info("Plugin \"diabox\" ready :)")
         self.ready()
 
 
-    def send_xpl(self, teleinfo):
+    def send_xpl(self, dbx_dev, dbx_type, dbx_value):
         """ send xPL on the network """
         self.log.debug("Send xPL msg with a line of diabox data")
-
-        #print "callback : receive frame is : \n\n"
-        #print teleinfo
-        #print "\n\n"
-
+        self.log.debug("with value : {}  {}  {}".format(dbx_dev, dbx_type, dbx_value))
         # creation du message xPL
         msg = XplMessage()
         msg.set_type("xpl-stat")
-        #msg.set_schema("sensor.basic")
-        msg.set_schema("teleinfo.basic")
+        msg.set_schema("sensor.basic")
         #msg.add_data({"timestamp" : teleinfo["timestamp"]})
+        msg.add_data({"device" : dbx_dev})
+        msg.add_data({"type" : dbx_type })
+        msg.add_data({"current" : dbx_value})
 
         try:
             self.myxpl.send(msg)

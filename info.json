@@ -6,107 +6,257 @@
 		"tags": ["weather"],
 		"dependencies": [
 			{
-				"id": "PyMySQL (>=0.7)",
+				"id": "requests (>=2.11)",
 				"type": "python"
-			}		
+			},
+			{
+				"id": "datetime",
+				"type": "python"
+			},
+			{
+				"id": "json (>=2.0.0)",
+				"type": "python"
+			}
 		],
-		"description": "This plugin takes live weather condition from diabox website",
+		"description": "Live weather plugin based on diabox station",
 		"domogik_min_version": "0.5",
 		"name": "diabox",
 		"type": "plugin",
-		"version": "0.0a"
+		"version": "0.0"
 	},
-    	"configuration": [
-	    {
-		"default": 60,
-		"description": "Interval between each poll (secondes)",
-		"key": "interval",
-		"name": "Interval",
-		"required": false,
-		"type": "integer"
-	    }
-	],
+    	"configuration": [],
     	"commands": {},
     	"xpl_commands": {},
     	"sensors": {
-		"papp": {
-		    "name": "papp",
-		    "data_type": "DT_ActiveEnergy",
+		"current_temperature": {
+		    "name": "temperature",
+		    "data_type": "DT_Temp",
 		    "conversion": "",
 		    "incremental": false,
 		    "timeout": 0,
 		    "history": {
 			"store": true,
-			"duplicate": true,
+			"duplicate": false,
 			"max": 0,
-			"expire": 0,
+			"expire": 20,
+			"round_value": 0
+		    }
+		},
+		"current_pressure": {
+		    "name": "pressure",
+		    "data_type": "DT_Pressure",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 20,
+			"round_value": 0
+		    }
+		},
+		"current_wind_speed_kts": {
+		    "name": "wind_speed_kts",
+		    "data_type": "DT_Speed",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 20,
+			"round_value": 0
+		    }
+		},
+		"current_wind_direction": {
+		    "name": "wind_direction",
+		    "data_type": "DT_Angle",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 20,
+			"round_value": 0
+		    }
+		},
+		"current_humidity": {
+		    "name": "humidity",
+		    "data_type": "DT_Humidity",
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 20,
+			"round_value": 0
+		    }
+		},
+		"current_rain_rate": {
+		    "name": "rain_rate",
+		    "data_type": "DT_mMeterHour", 
+		    "conversion": "",
+		    "incremental": false,
+		    "timeout": 0,
+		    "history": {
+			"store": true,
+			"duplicate": false,
+			"max": 0,
+			"expire": 20,
 			"round_value": 0
 		    }
 		}
 	},
     	"xpl_stats": {
-		"teleinfo": {
-		    "name": "Teleinfo",
-		    "schema": "teleinfo.basic",
-		    "parameters": {
-			"static": [],
-			"device": [],
-			"dynamic": [
-			    {
-				    "key": "optarif",
-				    "ignore_values": "",
-				    "sensor": "optarif"
-			    },
-			    {
-				    "key": "hchp",
-				    "ignore_values": "",
-				    "sensor": "hchp"
-			    },
-			    {
-				    "key": "hchc",
-				    "ignore_values": "",
-				    "sensor": "hchc"
-			    },
-			    {
-				    "key": "ptec",
-				    "ignore_values": "",
-				    "sensor": "ptec"
-			    },
-			    {
-				    "key": "inst1",
-				    "ignore_values": "",
-				    "sensor": "inst1"
-			    },
-			    {
-				    "key": "imax1",
-				    "ignore_values": "",
-				    "sensor": "imax1"
-			    },
-			    {
-				    "key": "papp",
-				    "ignore_values": "",
-				    "sensor": "papp"
-			    }
-			]
-		    }
-		}	
+		"current_temperature": {
+			"name":"Temperature",
+			"schema": "sensor.basic",
+		    	"parameters": {
+				"static": [
+					{
+						"key":"type",
+						"value":"temperature"
+					}
+				],
+				"device": [],
+				"dynamic": [
+			    		{
+				    		"key": "current",
+				    		"ignore_values": "",
+					    	"sensor": "current_temperature"
+			    		}
+				]
+			}
+		},
+		"current_pressure": {
+			"name":"Pressure",
+			"schema": "sensor.basic",
+		    	"parameters": {
+				"static": [
+					{
+						"key":"type",
+						"value":"pressure"
+					}
+				],
+				"device": [],
+				"dynamic": [
+			    		{
+				    		"key": "current",
+				    		"ignore_values": "",
+					    	"sensor": "current_pressure"
+			    		}
+				]
+			}
+		},
+		"current_wind_speed_kts": {
+			"name":"Wind speed",
+			"schema": "sensor.basic",
+		    	"parameters": {
+				"static": [
+					{
+						"key":"type",
+						"value":"windspeed"
+					}
+				],
+				"device": [],
+				"dynamic": [
+			    		{
+				    		"key": "current",
+				    		"ignore_values": "",
+					    	"sensor": "current_wind_speed_kts"
+			    		}
+				]
+			}
+		},
+		"current_wind_direction": {
+			"name":"Wind direction",
+			"schema": "sensor.basic",
+		    	"parameters": {
+				"static": [
+					{
+						"key":"type",
+						"value":"winddirection"
+					}
+				],
+				"device": [],
+				"dynamic": [
+			    		{
+				    		"key": "current",
+				    		"ignore_values": "",
+					    	"sensor": "current_wind_direction"
+			    		}
+				]
+			}
+		},
+		"current_humidity": {
+			"name":"Humidity",
+			"schema": "sensor.basic",
+		    	"parameters": {
+				"static": [
+					{
+						"key":"type",
+						"value":"humidity"
+					}
+				],
+				"device": [],
+				"dynamic": [
+			    		{
+				    		"key": "current",
+				    		"ignore_values": "",
+					    	"sensor": "current_humidity"
+			    		}
+				]
+			}
+		},
+		"current_rain_rate": {
+			"name":"Rain rate",
+			"schema": "sensor.basic",
+		    	"parameters": {
+				"static": [
+					{
+						"key":"type",
+						"value":"rainrate"
+					}
+				],
+				"device": [],
+				"dynamic": [
+			    		{
+				    		"key": "current",
+				    		"ignore_values": "",
+						"sensor":"current_rain_rate"
+					}
+				]
+			}
+		}
 	},
     	"device_types": {
-        	"teleinfo.electric_meter": {
-			"description": "Teleinformation from MySQL database",
-			"id": "teleinfo.electric_meter",
-			"name": "Teleinformation",
+        	"diabox.minou": {
+			"description": "Diabox au phare du Minou",
+			"id": "diabox.minou",
+			"name": "Phare du Minou (29)",
 			"commands": [],
-			"sensors": ["optarif", "hchp", "hchc", "ptec", "inst1", "imax1", "papp"],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
 			"parameters": [
 				{
 				    "key": "interval",
 				    "xpl": false,
-				    "description": "The time in seconds between each check\n (In my config, Arduino saves data in mysql every 30s...)",
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
 				    "type": "integer"
 				}
-			    ]
-			}
-
-	}
+			]
+		}
+	}		
 }	
