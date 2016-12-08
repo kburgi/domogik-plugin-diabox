@@ -28,6 +28,7 @@ list of dataName :
 - minou_d_humidity   (%)
 - minou_d_rain       (mm/h)
 
+
 ##### PHARE DE l'ILE WRACH #########
 # ID = 17
 
@@ -40,6 +41,7 @@ list of dataName :
 - wrach_humidity   (%)
 - wrach_rainRate       (mm/h)
 
+
 ##### KERMOVAN #########
 # ID = 15
 
@@ -51,3 +53,131 @@ list of dataName :
 - kermorvan_wind_rt   (direction [°] et vitesse en [kts])
 - kermorvan_humidity   (%)
 - kermorvan_rainRate       (mm/h)
+
+
+#### PHARE DE ST MATHIEU #####
+# ID = 16 
+
+st-mathieu_temperature
+st-mathieu_pressure
+st-mathieu_wind
+st-mathieu_humidity
+st-mathieu_rainRate
+
+
+
+##### Lampaul-Plouarzel ##########
+# ID = 111
+
+temperature
+pressure
+wind_rt
+humidity
+rain-rate
+
+
+######  camping des Abers #####
+# ID =  101
+
+temperature
+pressure
+wind_rt
+humidity
+rainRate
+
+######  Club Nautique de Plouguerneau #######
+# ID = 109
+
+temperature
+pressure
+wind_rt
+humidity
+rain-rate
+
+
+
+######### J’ai Cassé Ma Voile .com - CEntre nautique Guisseny ##########
+# ID = 104
+
+guisseny_temp
+guisseny_press
+guisseny_wind_rt
+# NO HUMIDIDTY !!!!!!!!
+
+
+#### Port de Saint-Cast  ########
+# ID = 108
+
+temperature
+pressure
+wind_rt
+humidity
+rain-rate
+
+
+###### IFREMER CERSAT
+# ID = 13
+
+CERSAT_temp
+CERSAT_press
+CERSAT_wind_rt
+CERSAT_wind_rt
+# NO HUMIDITY
+
+########## ST ANNE
+# ID = 14
+
+stanne_temperature
+stanne_pressure
+stanne_wind_rt
+stanne_wind_rt
+# NO HUMIDITY
+
+##### Capitainerie du port de Crozon Morgat #######
+# ID = 110
+
+temperature
+pressure
+wind_rt
+humidity
+rain-rate
+
+
+######## QUIMPER  (données proposées par DIATEAM) ########
+# ID = 9997
+
+quimper_temperature
+quimper_pressure
+quimper_wind_rt
+quimper_humidity
+
+
+#### capitainerie de Port-La-Forêt
+# ID = 100
+
+plf_temperature
+plf_pressure
+plf_wind_rt
+plf_humidity
+plf_rainRate
+
+##### Fouesnant-les Glénan  (Archipel des Glenan)
+ID = 106
+
+glenans_temperature
+glenans_pressure
+glenans_wind_rt
+glenans_humidity
+glenan_rainRate
+
+#####  PACIFIC PALISSADES ( MArseille)
+#id = 105
+
+pacific_temperature
+pacific_pressure
+pacific_wind_rt
+pacific_humidity
+pacific_rainRate
+
+ 
+

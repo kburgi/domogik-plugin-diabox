@@ -237,7 +237,7 @@
 	},
     	"device_types": {
         	"diabox.minou": {
-			"description": "Diabox au phare du Minou",
+			"description": "Diabox au phare du Minou (29)",
 			"id": "diabox.minou",
 			"name": "Phare du Minou (29)",
 			"commands": [],
@@ -259,9 +259,9 @@
 			]
 		},
         	"diabox.wrach": {
-			"description": "Diabox au phare de l'île Wrac'h",
+			"description": "Diabox au phare de l'île Wrac'h (29)",
 			"id": "diabox.wrach",
-			"name": "Phare de l'île Wrac'h",
+			"name": "Phare de l'île Wrac'h (29)",
 			"commands": [],
 			"sensors": [
 					"current_temperature", 
@@ -278,6 +278,307 @@
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
 				    "type": "integer"
 				}
+			]
+		},
+        	"diabox.kermorvan": {
+			"description": "Diabox au phare de Kermorvan (29)",
+			"id": "diabox.wrach",
+			"name": "Phare de Kermorvan (29)",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}
+			]
+		},
+        	"diabox.st_mathieu": {
+			"description": "Diabox au phare de St-Mathieu (29)",
+			"id": "diabox.st-mathieu",
+			"name": "Phare de St-Mathieu",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}
+			]
+		},
+        	"diabox.lampaul_plouarzel": {
+			"description": "Diabox au port Porspaul à Lampaul-Plouarzel (29)",
+			"id": "diabox.lampaul-plouarzel",
+			"name": "Porspaul - Lampaul-Plouarzel",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}
+			]
+		},
+        	"diabox.camping_abers": {
+			"description": "Diabox au camping des Abers (29)",
+			"id": "diabox.camping-abers",
+			"name": "Camping des Abers",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}
+			]
+		},
+        	"diabox.plougerneau": {
+			"description": "Diabox au Club Nautique de Plougerneau",
+			"id": "diabox.cn-plougerneau",
+			"name": "Club nautique Plougerneau",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}
+			]
+		},
+        	"diabox.guisseny": {
+			"description": "Diabox au Centre Nautique de Guisseny (29)",
+			"id": "diabox.cn-guisseny",
+			"name": "Centre Nautique Guisseny",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction" 
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}
+			]
+		},
+        	"diabox.st_cast": {
+			"description": "Diabox au port de St-Cast (22)",
+			"id": "diabox.st-cast",
+			"name": "Port de St-Cast",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}
+			]
+		},
+        	"diabox.ifremer_cersat": {
+			"description": "Diabox sur le site d'IFREMER CERSAT (29)",
+			"id": "diabox.ifremer_cersat",
+			"name": "IFREMER CERSAT",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction" 
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}
+			]
+		},
+        	"diabox.st_anne": {
+			"description": "Diabox sur la digue de St-Anne (29)",
+			"id": "diabox.st-anne",
+			"name": "Digue de St-Anne",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction" 
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}			
+			]
+		},
+        	"diabox.crozon_morgat": {
+			"description": "Diabox au port de Crozon-Morgat (29)",
+			"id": "diabox.crozon-morgat",
+			"name": "Port de Crozon-Morgat",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}			
+			]
+		},
+        	"diabox.quimper": {
+			"description": "Diabox à Quimper (29)",
+			"id": "diabox.quimper",
+			"name": "Ville de Quimper",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity" 
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}			
+			]
+		},
+        	"diabox.port_la_foret": {
+			"description": "Diabox à Port-La-Forêt (29)",
+			"id": "diabox.port-la-foret",
+			"name": "Port-La-Forêt",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}			
+			]
+		},
+        	"diabox.glenan": {
+			"description": "Diabox à l'archipel de Glénan",
+			"id": "diabox.glenan",
+			"name": "Archipel de Glénan",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}			
+			]
+		},
+        	"diabox.marseille_pacific": {
+			"description": "Diabox à Marseille fourni par PACIFIC PALISSADES et GLISSATTITUDE (13)",
+			"id": "diabox.marseille-pacific-palissades",
+			"name": "Marseille Pacific-Palissades-Glissattitude",
+			"commands": [],
+			"sensors": [
+					"current_temperature", 
+					"current_pressure", 
+					"current_wind_speed_kts", 
+					"current_wind_direction", 
+					"current_humidity", 
+					"current_rain_rate"
+			],
+			"parameters": [
+				{
+				    "key": "interval",
+				    "xpl": false,
+				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
+				    "type": "integer"
+				}			
 			]
 		}
 	}		
