@@ -93,6 +93,10 @@ class DiaboxManager(XplPlugin):
                 self.log.debug("------- Calling manager => DiaboxLib  -------------")
                 # note : device_type_id = diabox.minou / diabox.wrach / etc => required for diaboxconfig module
                 self._diabox_manager = DiaboxLib(self.log, self.send_xpl, self.get_stop(), dev['device_type_id'], dev["id"], refresh_interval)
+                if self._diabox_manager.isConfigured == False:
+                    self.log.error("Something went wrent wrong during init of the DiaboxManager for device_type_id=\"{}\"  => I skip it !".format(dev['device_type_id'])) 
+                    continue;
+
                 self.add_stop_cb(self._diabox_manager.stop)
 
                 thr_name = "diabox_{}".format(dev['name'])
@@ -105,9 +109,10 @@ class DiaboxManager(XplPlugin):
                 threads[thr_name].start()
                 self.register_thread(threads[thr_name])
             except:
+                self.log.error("[bin/diabox.py] Exception spotted while creating threads !!")
                 self.log.error("{0}".format(traceback.format_exc()))
-                self.log.error("ERROR : exit plugin diabox")
-                return
+                self.log.error("[bin/diabox.py][device_type_id={}] Leaving this diabox thread for this device !".format(dev['device-type_id']))
+                return  
 
         self.log.info("Plugin \"diabox\" ready :)")
         self.ready()

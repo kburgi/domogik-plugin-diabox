@@ -49,16 +49,17 @@ class DiaboxLib():
         self.cfg = DiaboxConfig.DiaboxConfig(dbx_dev_type, self.log)
         
         if self.cfg.isValid is not True:
-            self.log.error("ERROR DURING DIABOX CONFIGURATION FOR DEVICE \"dbx_domo_id={}\" [config not found !]".format(dbx_domo_id))
-            sys.exit(1)
+            self.log.error("ERROR DURING DIABOX CONFIGURATION FOR DEVICE \"domo_dev_id={}\" [config not found !]".format(domogik_dev_id))
+            self.isConfigured=True
         else:
-            self.log.info("Init of plugin \"diabox\" for station \"{}\"-> completed".format(self.cfg.station_name))
+            self.log.info("Init of plugin \"diabox\" for dbx_dev_type \"{}\"-> completed".format(self.cfg.station_name))
+            self.isConfigured=False
 
     def __del__(self):
-       self.log.debug("Nothing to do")
+       self.log.debug("[domogik_dev_id={}] Deleting DiaboxLib object ".format(self.domogik_dev_id))
 
     def stop(self):
-        self.log.debug("Nothing to stop")
+        self.log.debug("[domogik_dev_id={}] Stopping my thread !".format(self.domogik_dev_id))
 
     def get_dbx_temp(self):
         try:

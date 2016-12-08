@@ -368,7 +368,7 @@
 				}
 			]
 		},
-        	"diabox.plougerneau": {
+        	"diabox.cn_plougerneau": {
 			"description": "Diabox au Club Nautique de Plougerneau",
 			"id": "diabox.cn-plougerneau",
 			"name": "Club nautique Plougerneau",
@@ -390,7 +390,7 @@
 				}
 			]
 		},
-        	"diabox.guisseny": {
+        	"diabox.cn_guisseny": {
 			"description": "Diabox au Centre Nautique de Guisseny (29)",
 			"id": "diabox.cn-guisseny",
 			"name": "Centre Nautique Guisseny",
