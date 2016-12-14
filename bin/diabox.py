@@ -65,15 +65,31 @@ class DiaboxManager(XplPlugin):
         for dev in self.devices:
             try:
                 self.log.debug("--------- INIT DEVICE \"{}\" ------------------".format(dev['name']))
-                #print dev
+                
+                print "~~~~~~~~~~ DEBUG TEST ZONE : print content of \"dev\" var ~~~~~~~~~~~~~~~~~~~~\n"
+                print dev
+                print "\n\n"
+
                 #print "--------------------"
                 #print "dev['{}']={}".format("description", dev['description'])
 
 
-                # need to now which station to catch right diabox variable in diaboxconfig
-                self.log.info("Config : diabox station type \"{}\"".format(dev['device_type_id']))
-                self.log.info("Config : diabox description \"{}\"".format(dev['description']))
-                #print "dev['{}']={}".format("device_type_id", dev['device_type_id'])
+                # need to now which diabox station id for current dev
+                # => use to catch right diabox variable in lib/diaboxconfig.py
+                self.log.info("Init of the station diabox type => \"{}\"".format(dev['device_type_id']))
+                self.log.info("[dbx_type={}] Diabox description \"{}\"".format(dev['device_type_id'], dev['description']))
+
+                # getting the xpl_uid (xpl unique identifier)
+                feat = dev['xpl_stats'].iterkeys().next()
+                xpl_uid = self.get_parameter_for_feature(dev,"xpl_stats",feat,"device")
+                self.log.info("[dbx_type={}] Device xpl_uid =  \"{}\"".format(dev['device_type_id'], xpl_uid))
+                
+                # listing whole feature for current station (from info.json)
+                self.log.info("[dbx_type={}] The feature for this station are : ".format(dev['device_type_id']))
+                for cur_feat in dev['xpl_stats']:
+                    self.log.info("[dbx_type={}]\tfeat : {}".format(dev['device_type_id'], cur_feat))
+                
+
 
 
 #                self.log.debug("---------- test device configured ---------------")
@@ -86,21 +102,21 @@ class DiaboxManager(XplPlugin):
 
                 refresh_interval = self.get_parameter(dev,"interval")
                 if refresh_interval == None:
-                    self.log.error("Interval \"{}\" is invalid for device \"{}\"".format(refresh_interval, dev['name']))                
+                    self.log.error("[dbx_type={}] Interval \"{}\" is invalid for device \"{}\"".format(dev['device_type_id'], refresh_interval, dev['name']))                
                     return
-                self.log.debug("Dev={}  Config refresh interval = {}".format(dev['name'], refresh_interval))
+                self.log.debug("[dbx_type={}] Refresh interval configured = \"{}\"".format(dev['device_type_id'], dev['name'], refresh_interval))
 
-                self.log.debug("------- Calling manager => DiaboxLib  -------------")
+                self.log.debug("[dbx_type={}] ------- Calling manager => DiaboxLib  -------------".format(dev['device_type_id']))
                 # note : device_type_id = diabox.minou / diabox.wrach / etc => required for diaboxconfig module
-                self._diabox_manager = DiaboxLib(self.log, self.send_xpl, self.get_stop(), dev['device_type_id'], dev["id"], refresh_interval)
+                self._diabox_manager = DiaboxLib(self.log, self.send_xpl, self.get_stop(), dev['device_type_id'], dev["id"], refresh_interval, xpl_uid)
                 if self._diabox_manager.isConfigured == False:
-                    self.log.error("Something went wrent wrong during init of the DiaboxManager for device_type_id=\"{}\"  => I skip it !".format(dev['device_type_id'])) 
+                    self.log.error("[dbx_type={}] Something went wrent wrong during init of the DiaboxManager !!  => I skip this device !".format(dev['device_type_id'])) 
                     continue;
 
                 self.add_stop_cb(self._diabox_manager.stop)
 
                 thr_name = "diabox_{}".format(dev['name'])
-                self.log.info("[Starting thread {}] Start fetching diabox data".format(thr_name))
+                self.log.info("[dbx_type={}][Starting thread {}] Start fetching diabox data".format(dev['device_type_id'], thr_name))
                 threads[thr_name] = threading.Thread(None,
                                                     self._diabox_manager.get_diabox_data,
                                                     thr_name,
@@ -117,19 +133,24 @@ class DiaboxManager(XplPlugin):
         self.log.info("Plugin \"diabox\" ready :)")
         self.ready()
 
-
-    def send_xpl(self, domo_dev_id, dbx_station_name, sensor_name, sensor_type, sensor_value):
+    
+    def send_xpl(self, domo_dev_id, xpl_uid, dbx_station_name, sensor_name, sensor_type, sensor_value):
         """ send xPL on the network """
         self.log.debug("Will send an xPL msg with a line of diabox data... see line below")
-        self.log.debug("[domo_dev_id=\"{}\"][dbx=\"{}\"][type=\"{}\"][val=\"{}\"]"
-                        .format(domo_dev_id, dbx_station_name, sensor_type, sensor_value))
+        self.log.debug("[domo_dev_id=\"{}\"][dbx=\"{}\"][device_xpl_uid={}][type=\"{}\"][val=\"{}\"]"
+                        .format(domo_dev_id, dbx_station_name, xpl_uid, sensor_type, sensor_value))
         # creation du message xPL
         msg = XplMessage()
         msg.set_type("xpl-stat")
         msg.set_schema("sensor.basic")
-        msg.add_data({"device" : domo_dev_id})
+        msg.add_data({"device" : xpl_uid})
         msg.add_data({"type" : sensor_type })
         msg.add_data({"current" : sensor_value})
+
+        print "------### DEBUG MSG XPL ----##########"
+        print "\n"
+        print msg
+        print "\n\n"
 
         try:
             self.log.debug("Now trying to send the xpl msg...")

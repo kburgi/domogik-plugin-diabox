@@ -29,31 +29,34 @@ except Exception as e:
 
 class DiaboxLib():
 
-    def __init__(self, log, callback, stop, dbx_dev_type, domogik_dev_id, interval):
+    def __init__(self, log, callback, stop, dbx_dev_type, domogik_dev_id, interval, xpl_uid):
         """ Init TeleinfoMysqlObject
             @param log : log instance
             @param callback : callback
             @param stop : stop
-            @param dev_type : domogik device_type_id (diabox.minou / diabox.wrach) configured in info.json
+            @param dev_type : domogik device_type_id (ex : diabox.minou / diabox.wrach) configured in info.json
+            @param domogik_dev_id : the id of the created device in domogik
+            @param interval : the time between two requests of data for the current diabox station
+            @param domogik_xpl_uid : the xpl unique identifier configured for each station (xPL parameters when creating a device). This value MUST be unique !
         """
         
         self.log = log
-        self._callback = callback # to send and xpl message
+        self._callback = callback
         self._stop = stop
         self.domogik_dev_id = domogik_dev_id
+        self.xpl_uid = xpl_uid;
         self.refresh_interval = interval
         self.log.info("\n\t\t\t\t\t-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#")
-        self.log.info("Starting initialization of plugin_diabox for device type {}".format(dbx_dev_type))
+        self.log.info("Starting initialization of the DiaboxManager for device type {}".format(dbx_dev_type))
 
-#        self.dbx_domo_id = dbx_domo_id;
         self.cfg = DiaboxConfig.DiaboxConfig(dbx_dev_type, self.log)
         
         if self.cfg.isValid is not True:
             self.log.error("ERROR DURING DIABOX CONFIGURATION FOR DEVICE \"domo_dev_id={}\" [config not found !]".format(domogik_dev_id))
-            self.isConfigured=True
+            self.isConfigured=False
         else:
             self.log.info("Init of plugin \"diabox\" for dbx_dev_type \"{}\"-> completed".format(self.cfg.station_name))
-            self.isConfigured=False
+            self.isConfigured=True
 
     def __del__(self):
        self.log.debug("[domogik_dev_id={}] Deleting DiaboxLib object ".format(self.domogik_dev_id))
@@ -304,7 +307,7 @@ class DiaboxLib():
 
     def sentDataToDomogik(self, sensor_name, sensor_type, cur_val):
         """ send the cur_val for sensor_name to domogik as a xpl msg"""             
-        self._callback(self.domogik_dev_id, self.cfg.station_name, sensor_name, sensor_type, cur_val)
+        self._callback(self.domogik_dev_id, self.xpl_uid, self.cfg.station_name, sensor_name, sensor_type, cur_val)
 
 
 if __name__ == "__main__":

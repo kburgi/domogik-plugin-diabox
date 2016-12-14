@@ -251,6 +251,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_Minou",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -273,6 +280,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_ile-Wrach",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -282,7 +296,7 @@
 		},
         	"diabox.kermorvan": {
 			"description": "Diabox au phare de Kermorvan (29)",
-			"id": "diabox.wrach",
+			"id": "diabox.kermorvan,",
 			"name": "Phare de Kermorvan (29)",
 			"commands": [],
 			"sensors": [
@@ -294,6 +308,14 @@
 					"current_rain_rate"
 			],
 			"parameters": [
+				{
+				    "default": "dbx_Kermorvan",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+
 				{
 				    "key": "interval",
 				    "xpl": false,
@@ -317,6 +339,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_St-Mathieu",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -338,6 +367,13 @@
 					"current_rain_rate"
 			],
 			"parameters": [
+				{
+				    "default": "dbx_Lampaul-Plouarzel",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
 				{
 				    "key": "interval",
 				    "xpl": false,
@@ -361,6 +397,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_Camping_Abers",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -383,6 +426,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_Pougerneau",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -402,6 +452,13 @@
 					"current_wind_direction" 
 			],
 			"parameters": [
+				{
+				    "default": "dbx_Guisseny",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
 				{
 				    "key": "interval",
 				    "xpl": false,
@@ -425,6 +482,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_St-Cast",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -445,6 +509,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_IFREMER-CERSAT",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -464,6 +535,13 @@
 					"current_wind_direction" 
 			],
 			"parameters": [
+				{
+				    "default": "dbx_St-Anne",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
 				{
 				    "key": "interval",
 				    "xpl": false,
@@ -487,6 +565,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_Crozon-Morgat",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -507,6 +592,13 @@
 					"current_humidity" 
 			],
 			"parameters": [
+				{
+				    "default": "dbx_Quimper",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
 				{
 				    "key": "interval",
 				    "xpl": false,
@@ -530,6 +622,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_Port-La-Foret",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -552,6 +651,13 @@
 			],
 			"parameters": [
 				{
+				    "default": "dbx_Glenan",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
+				{
 				    "key": "interval",
 				    "xpl": false,
 				    "description": "The time in seconds between each refresh of data. Please do NOT be to greedy. A refresh rate bewteen 60 and 600 sec (1 - 10 min) seems to be respectable.",
@@ -573,6 +679,13 @@
 					"current_rain_rate"
 			],
 			"parameters": [
+				{
+				    "default": "dbx_Marseille",
+				    "key": "device",
+				    "xpl" : true,
+				    "description": "Choose a device identifier (name must be unique in domogik)",
+				    "type": "string"
+				},
 				{
 				    "key": "interval",
 				    "xpl": false,
