@@ -6,7 +6,7 @@
 minou={}
 minou["dev_type"]="diabox.minou"  #domogik json id
 minou["name"]="Minou"
-minou["rid"]="11"
+minou["rid"]="11"  # the remote id (see url in diabox website)
 minou["temperature"]="minou_d_temperature"
 minou["pressure"]="minou_d_pressure"
 minou["wind_speed_kts"]="minou_d_wind_rt"
@@ -186,9 +186,8 @@ list_diabox = [ minou, wrach, kermorvan, st_mathieu, lampaul_plouarzel,
                 glenan, marseille_pacific_palissades ]
 
         
-
 class DiaboxConfig():
-    """ List of all diabox config """
+    """ Provide the config for a given diabox station """
 
     def __init__(self, dev_type, domo_log):
         self.domo_log = domo_log
@@ -196,13 +195,14 @@ class DiaboxConfig():
         #get the config of the diabox station
         cfg = self.get_dbx_config(dev_type)
         if cfg == None:
+            # no valid config found. Check if station exists in list_diabox !
             self.isValid=False
         else:
             self.station_name = cfg["name"]
-#            self.station_rid = cfg["rid"]   # This is remote id, on diabox website !
             
             self.sensors_url={}
-
+            
+            # every station have NOT all sensors
             if cfg["temperature"] != "":
                 self.sensors_url["temperature"] = self.get_remote_url(cfg["rid"], cfg["temperature"])
 
@@ -227,10 +227,9 @@ class DiaboxConfig():
         """ Iteration over list_diabox to get config for dev_type (diabox.minou / diabox.wrach / ...) """
         for dbx in list_diabox:
             if dev_type == dbx["dev_type"]:
-                self.domo_log.info("Diabox config found ! It's the station \"{}\" ! :-)".format(dbx["name"]))
-                #print "debug : diabox config found for dbx_name = {}".format(dbx["name"])
+                self.domo_log.info("[lib/diaboxconfig] Diabox config found ! It's the station \"{}\" ! :-)".format(dbx["name"]))
                 return dbx
-        self.domo_log.error("No Diabox config correspondance for diabox_type=\"{}\" !!!!".format(dev_type))
+        self.domo_log.error("[lib/diaboxconfig] No Diabox config correspondance for diabox_type=\"{}\" !!!!".format(dev_type))
         return None
 
     def get_remote_url(self, dbx_remote_id, dbx_remote_sensor_var):

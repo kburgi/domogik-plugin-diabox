@@ -22,7 +22,7 @@
 		"domogik_min_version": "0.5",
 		"name": "diabox",
 		"type": "plugin",
-		"version": "0.0"
+		"version": "0.1alpha"
 	},
     	"configuration": [],
     	"commands": {},
