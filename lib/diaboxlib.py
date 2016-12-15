@@ -113,7 +113,8 @@ class DiaboxLib():
                 return None
             else:
                 #check that content is not null (greater than 5 car. [arbitrary value])
-                if r.headers["Content-Length"] < 5:
+                #self.log.debug("get_dbx_temp : Content-Length={}".format(r.headers["Content-Length"]))
+                if int(r.headers["Content-Length"]) < 5:
                     self.log.error("[dbx=\"{}\"][data_type=\"{}\"] http response contains no data !! [\"Content-Length\"='{}']"
                             .format(self.cfg.station_name, "temperature", r.headers["Content-Length"]))
                     return None
@@ -148,7 +149,7 @@ class DiaboxLib():
                 return None
             else:
                 #check that content is not null (greater than 5 caract.)
-                if r.headers["Content-Length"] < 5:
+                if int(r.headers["Content-Length"]) < 5:
                     self.log.error("[dbx=\"{}\"][data_type=\"{}\"] http response contains no data !! [\"Content-Length\"='{}']"
                             .format(self.cfg.station_name, "pressure", r.headers["Content-Length"]))
                     return None
@@ -190,7 +191,7 @@ class DiaboxLib():
                 return None
             else:
                 #check that content is not null (greater than 5 caract.)
-                if r.headers["Content-Length"] < 5:
+                if int(r.headers["Content-Length"]) < 5:
                     self.log.error("[dbx=\"{}\"][data_type=\"{}\"] http response contains no data !! [\"Content-Length\"='{}']"
                             .format(self.cfg.station_name, "wind_data", r.headers["Content-Length"]))
                     return None
@@ -228,7 +229,7 @@ class DiaboxLib():
                 return None
             else:
                 #check that content is not null (greater than 5 caract.)
-                if r.headers["Content-Length"] < 5:
+                if int(r.headers["Content-Length"]) < 5:
                     self.log.error("[dbx=\"{}\"][data_type=\"{}\"] http response contains no data !! [\"Content-Length\"='{}']"
                             .format(self.cfg.station_name, "humidity", r.headers["Content-Length"]))
                     return None
@@ -262,7 +263,7 @@ class DiaboxLib():
                 return None
             else:
                 #check that content is not null (greater than 5 caract.)
-                if r.headers["Content-Length"] < 5:
+                if int(r.headers["Content-Length"]) < 5:
                     self.log.error("[dbx=\"{}\"][data_type=\"{}\"] http response contains no data !! [\"Content-Length\"='{}']"
                             .format(self.cfg.station_name, "rain_rate", r.headers["Content-Length"]))
                     return None
@@ -292,36 +293,34 @@ class DiaboxLib():
                 if "temperature" in self.cfg.sensors_url:
                     cur_temp = self.get_dbx_temp()
                     if cur_temp == None:
-                        self.log.error("Oh Oh : Strange ! No data for sensor temp for diabox \"{}\""
-                                .format(self.cfg.station_name))
+                        self.log.error("Oh Oh : Strange ! No data for temp sensor for diabox \"{}\". The URL used was \"{}\"".format(self.cfg.station_name, self.cfg.sensors_url["temperature"]))
                     else:
                         cur_temp = round(cur_temp, 1)
                         self.log.debug("Trying to send a \"temp\" for diabox station \"{}\""
                                 .format(self.cfg.station_name))
                         self.sentDataToDomogik("Temperature", "temperature", cur_temp) #try to auto this ?
                 else:
-                    sys.log.debug("No temperature sensor for diabox station \"{}\"".format(self.cfg.station_name))
+                    self.log.debug("No temperature sensor for diabox station \"{}\"".format(self.cfg.station_name))
                 
                 ###### pressure #######
                 if "pressure" in self.cfg.sensors_url:
                     cur_hpa = self.get_dbx_pressure()
                     if cur_hpa == None:
-                        self.log.error("Oh Oh : Strange ! No data for sensor pressure for diabox \"{}\""
-                                .format(self.cfg.station_name))
+                        self.log.error("Oh Oh : Strange ! No data received for pressure sensor for diabox \"{}\". The URL used was \"{}\"".format(self.cfg.station_name, self.cfg.sensors_url["pressure"]))
+                        P
                     else:
-                        cur_hpa = round(cur_hpa)
+                        cur_hpa = round(cur_hpa, 1)
                         self.log.debug("Trying to send a \"pressure\" for diabox station \"{}\""
                                 .format(self.cfg.station_name))
                         self.sentDataToDomogik("Pressure", "pressure", cur_hpa) #try to auto this ?
                 else:
-                    sys.log.debug("No pressure sensor for diabox station \"{}\"".format(self.cfg.station_name))
+                    self.log.debug("No pressure sensor for diabox station \"{}\"".format(self.cfg.station_name))
                 
                 ###### wind data #######
                 if "wind_speed_kts" in self.cfg.sensors_url:
                     cur_wind_data = self.get_dbx_wind()
                     if cur_wind_data == None:
-                        self.log.error("Oh Oh : Strange ! No data received for wind sensor for diabox \"{}\""
-                                .format(self.cfg.station_name))
+                        self.log.error("Oh Oh : Strange ! No data received for wind sensor for diabox \"{}\". The URL used was \"{}\"".format(self.cfg.station_name, self.cfg.sensors_url["wind_speed_kts"]))
                     else:
                         cur_wind_speed_kts = round(cur_wind_data["speed"], 1)
                         cur_wind_direction = round(cur_wind_data["direction"], 1)
@@ -331,35 +330,35 @@ class DiaboxLib():
                         self.sentDataToDomogik("Wind speed", "windspeed", cur_wind_speed_kts) #try to auto this ?
                         self.sentDataToDomogik("Wind direction", "winddirection", cur_wind_direction) #try to auto this ?
                 else:
-                    sys.log.debug("No wind sensor for diabox station \"{}\"".format(self.cfg.station_name))
+                    self.log.debug("No wind sensor for diabox station \"{}\"".format(self.cfg.station_name))
                 
                 ###### humidity #######
                 if "humidity" in self.cfg.sensors_url:
                     cur_hum = self.get_dbx_humidity()
                     if cur_hum == None:
-                        self.log.error("Oh Oh : Strange ! No data for humidity sensor for diabox \"{}\""
-                                .format(self.cfg.station_name))
+                        self.log.error("Oh Oh : Strange ! No data for humidity sensor for diabox \"{}\". The URL used was     \"{}\"".format(self.cfg.station_name, self.cfg.sensors_url["humidity"]))
                     else:
-                        cur_hum = round(cur_hum, 1)
+                        cur_hum = round(cur_hum)
                         self.log.debug("Trying to send a \"humidity\" for diabox station \"{}\""
                                 .format(self.cfg.station_name))
                         self.sentDataToDomogik("Humidity", "humidity", cur_hum) #try to auto this ?
                 else:
-                    sys.log.debug("No humidity sensor for diabox station \"{}\"".format(self.cfg.station_name))
+                    self.log.debug("No humidity sensor for diabox station \"{}\"".format(self.cfg.station_name))
                     
                 ###### rain rate #######
                 if "rain_rate" in self.cfg.sensors_url:
-                    cur_rain = round(self.get_dbx_rainrate(), 1)
+                    cur_rain = self.get_dbx_rainrate()
                     if cur_rain == None:
-                        self.log.error("Oh Oh : Strange ! No data for rain_rate sensor for diabox \"{}\""
-                                .format(self.cfg.station_name))
+                        self.log.error("Oh Oh : Strange ! No data for rain_rate sensor for diabox \"{}\". The URL used was \"{}\""
+                                .format(self.cfg.station_name, self.cfg.sensors_url["rain_rate"]))
                     else:
+                        self.log.debug("[dbx={}] cur_rain={}".format(self.cfg.station_name, cur_rain))
                         cur_rain = round(cur_rain, 1)
                         self.log.debug("Trying to send a \"rain_rate\" for diabox station \"{}\""
                                 .format(self.cfg.station_name))
                         self.sentDataToDomogik("Rain rate", "rainrate", cur_rain) #try to auto this ?
                 else:
-                    sys.log.debug("No rain_rate sensor for diabox station \"{}\"".format(self.cfg.station_name))
+                    self.log.debug("No rain_rate sensor for diabox station \"{}\"".format(self.cfg.station_name))
 
             except Exception as e :
                 self.log.error("!!! EXCEPTION WHILE GETTING/SENDING DIABOX DATA [dbx=\"{}\"][xpl_uid=\"{}\"]!!!"

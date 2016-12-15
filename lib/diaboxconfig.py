@@ -45,7 +45,7 @@ st_mathieu["pressure"]="st-mathieu_pressure"
 st_mathieu["wind_speed_kts"]="st-mathieu_wind_rt"
 st_mathieu["wind_direction"]="st-mathieu_wind_rt"     #it's the same var
 st_mathieu["humidity"]="st-mathieu_humidity"
-st_mathieu["rain_rate"]="st-mathieu_rainrate"
+st_mathieu["rain_rate"]="st-mathieu_rainRate"
 
 lampaul_plouarzel={}
 lampaul_plouarzel["dev_type"]="diabox.lampaul_plouarzel"  #domogik json id
@@ -127,7 +127,7 @@ st_anne["rain_rate"]=""
 crozon_morgat={}
 crozon_morgat["dev_type"]="diabox.crozon_morgat"  #domogik json id
 crozon_morgat["name"]="Port Crozon-Morgat"
-crozon_morgat["rid"]="104"
+crozon_morgat["rid"]="110"
 crozon_morgat["temperature"]="temperature"
 crozon_morgat["pressure"]="pressure"
 crozon_morgat["wind_speed_kts"]="wind_rt"
@@ -143,7 +143,7 @@ quimper["temperature"]="quimper_temperature"
 quimper["pressure"]="quimper_pressure"
 quimper["wind_speed_kts"]="quimper_wind_rt"
 quimper["wind_direction"]="quimper_wind_rt"     #it's the same var
-quimper["humidity"]="humidity"
+quimper["humidity"]="quimper_humidity"
 quimper["rain_rate"]=""
 
 port_la_foret={}
