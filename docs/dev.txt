@@ -1,0 +1,54 @@
+========================
+Development informations
+========================
+
+Interval limitation
+===================
+
+The refresh limitation of 60 seconds between 2 requests for the same diabox station is hard coded.
+
+How to add a new diabox station 
+===============================
+
+That's quick easy : 
+* edit the info.json and add your device with his sensors
+* edit the lib/diaboxconfig.py and add your station on top of the file
+
+Each diabox station has her own config (remote identifier and remote variable name). That's why there is no common variable.
+
+Wind unit : knot
+================
+
+The diabox are commonly used by sailors, so the wind speed unit is in *knots (kts)* by default. If you want to have it in km/h, you must multiply this value by 1.835
+
+*Exemple : 25 knots * 1.835 = 46 km/h
+
+xPL messages
+============
+
+xpl-stat
+--------
+
+The **sensor.basic** message is used: ::
+
+    xpl-stat
+    {
+    ...
+    }
+    sensor.basic
+    {
+    type=<one of these sensors : temperature, humidity, windspeed, winddirection, pressure, rainrate>
+    device=<device_uid>
+    current=<value>
+    }
+
+xpl-trig
+--------
+
+n/a
+
+xpl-cmnd
+--------
+
+n/a
+

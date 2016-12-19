@@ -1,0 +1,51 @@
+.. _index:
+
+===============
+Plugin Diabox
+===============
+
+Purpose
+=======
+
+The Diabox plugin is used to monitor diabox weather station in live. Each station has different kind of sensors : temperature, pressure, humidity, wind speed and direction, rain rate. Most of the available station have all these sensors, but it's not always true.
+
+Dependencies
+============
+
+* Python dependancy : requests, json
+
+Plugin configuration
+====================
+
+There is no global configuration options for this plugin.
+
+Create the domogik devices
+==========================
+
+Domogik device type : diabox.diabox_name
+-----------------------------------------
+
+There are one device per diabox station, but the configuration is the same for each.
+
+Here take the example with the device *diabox.minou* (Phare du Minou (29))
+
+2 parameters are needed for a domogik device creation:
+
+===================== =========================== ======================================================================
+Key                   Type                        Description
+===================== =========================== ======================================================================
+device                string                      The identifier of the diabox station. This identifier must be unique. If you want to have only one device for this diabox station, you can leave the default value (Example : *dbx_Minou*).
+--------------------- --------------------------- ----------------------------------------------------------------------
+interval              number                      The time in seconds between each time the diabox station is monitored. It could not be less than 60 seconds (prevent server overloading). 600 seconds (10 min) sounds great.
+===================== =========================== ======================================================================
+
+Start the plugin
+================
+
+You can now start the plugin (start button) and use the created domogik devices. If you created a new device after you stared the plugin, you need to stop & start the plugin again.
+
+Set up your widgets on the user interface
+=========================================
+
+You can now place the widgets of your devices features on the user interface. Enjoy.
+
