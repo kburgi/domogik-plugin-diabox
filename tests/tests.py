@@ -13,78 +13,72 @@ import sys
 import os
 import traceback
 
-class PingTestCase(PluginTestCase):
+class DiaboxTestCase(PluginTestCase):
 
-    def test_0100_ping_on(self):
-        """ check if all the xpl messages for a device up is sent
-            Example : 
-            xpl-trig : schema:sensor.basic, data:{'type': 'input', 'current': 'high', 'device': 127.0.00.1'}
+    def test_0100_checkThatWeGetDataFromStation(self):
+        """ check if we receive xpl msg with a rainrate value from a diabox station
+
+            Note that we cannot check "value" which change all the time (live weather conditions...)
+
+            However, we can try to catch an xpl msg with the rainrate value... wich the hope that 
+            between the 2 requests, the data will not change :-P
+
+            Example : Phare Du Minou (which has dbx_dev_type = diabox.minou  [see info.json])
+            
+            xpl-stat
+            {
+                hop=1
+                source=
+                target=
+            }
+            sensor.basic
+            {
+                device=dbx_Minou
+                type=rainrate
+                current=0.0
+            }
+            
+            => possible type : temperature, pressure, windspeed, winddirection, humidity, rainrate
         """
-        global devices
+        global diabox_json_dev_type_id  # dict with ["json_dev_id"] = { "dev_id" : 000, "ref_xpl": xpl_uuid }
+        global cur_jdtid
+        global interval
 
-        address = "127.0.0.1"
+        dev_param = diabox_json_dev_type_id[cur_jdtid]
+        dev_id = dev_param["dev_id"]
+        dev_xpl = dev_param["ref_xpl"]
 
         # test 
-        print(u"Device address = {0}".format(address))
-        print(u"Device id = {0}".format(devices[address]))
-        print(u"Check that a message with current = 'high' is sent.")
+        print(u"Device tested = {0}".format(cur_jdtid))
+        print(u"Device id = {0}".format(diabox_json_dev_type_id[cur_jdtid]))
+        print(u"Check that we receive an xpl msg with rainrate value from {} diabox station.".format(cur_jdtid))
         
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
                                           xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
-                                          data = {"type" : "input",
-                                                  "device" : address,
-                                                  "current" : "high"},
-                                          timeout = 10))
+                                          data = {"type" : "rainrate",
+                                                  "device" : dev_xpl,
+                                                  "current" : "0.0"},
+                                          timeout = 70))
+
+        cur_xpl_rcv_val = self.xpl_data.data['current']
+        print(u"Xpl receive value : {}".format(cur_xpl_rcv_val))        
+
         print(u"Check that the value of the xPL message has been inserted in database")
-        sensor = TestSensor(devices[address], "ping")
+        #print(u"[debug perso] dev_id={}  dev_xpl={}".format(dev_id, dev_xpl))
+        sensor = TestSensor(dev_id, "current_rain_rate")
         print(sensor.get_last_value())
-        from domogik_packages.plugin_ping.conversion.from_low_high_to_DT_Switch import from_low_high_to_DT_Switch
-        # the data is converted to be inserted in database
-        self.assertTrue(int(sensor.get_last_value()[1]) == from_low_high_to_DT_Switch(self.xpl_data.data['current']))
-
-
-    def test_0101_ping_off(self):
-        """ check if all the xpl messages for a device off is sent
-            Example : 
-            xpl-trig : schema:sensor.basic, data:{'type': 'input', 'current': 'low', 'device': 1.1.1.1'}
-        """
-        global devices
-
-        address = "1.1.1.1"
-
-        # test 
-        print(u"Device address = {0}".format(address))
-        print(u"Device id = {0}".format(devices[address]))
-        print(u"Check that a message with current = 'low' is sent.")
-        
-        self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
-                                          xplschema = "sensor.basic",
-                                          xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
-                                          data = {"type" : "input",
-                                                  "device" : address,
-                                                  "current" : "low"},
-                                          timeout = 20))
-        print(u"Check that the value of the xPL message has been inserted in database")
-        sensor = TestSensor(devices[address], "ping")
-        print(sensor.get_last_value())
-        from domogik_packages.plugin_ping.conversion.from_low_high_to_DT_Switch import from_low_high_to_DT_Switch
-        # the data is converted to be inserted in database
-        print(int(sensor.get_last_value()[1]))
-        print(from_low_high_to_DT_Switch(self.xpl_data.data['current']))
-        self.assertTrue(int(sensor.get_last_value()[1]) == from_low_high_to_DT_Switch(self.xpl_data.data['current']))
-
-
+        self.assertTrue(sensor.get_last_value()[1] == cur_xpl_rcv_val)
 
 
 if __name__ == "__main__":
 
     test_folder = os.path.dirname(os.path.realpath(__file__))
 
-    ### global variables
-    # the key will be the device address
-    devices = {"127.0.0.1" : 0, 
-               "1.1.1.1" : 0}
+    # the list of diabox tested    key = dev_type_id and value = id for created device
+    diabox_json_dev_type_id = { "diabox.minou" : 0
+                              }
+    interval = 60
 
     ### configuration
 
@@ -96,7 +90,7 @@ if __name__ == "__main__":
                            test  = True)
 
     # set up the plugin name
-    name = "ping"
+    name = "diabox"
 
     # set up the configuration of the plugin
     # configuration is done in test_0010_configure_the_plugin with the cfg content
@@ -108,23 +102,27 @@ if __name__ == "__main__":
     # load the test devices class
     td = TestDevice()
 
-    # delete existing devices for this plugin on this host
-    client_id = "{0}-{1}.{2}".format("plugin", name, get_sanitized_hostname())
-    try:
-        td.del_devices_by_client(client_id)
-    except: 
-        print(u"Error while deleting all the test device for the client id '{0}' : {1}".format(client_id, traceback.format_exc()))
-        sys.exit(1)
+    for cur_jdtid in diabox_json_dev_type_id:
 
-    # create a test device
-    try:
-        params = td.get_params(client_id, "ping.ping")
-   
-        for dev in devices:
-            print("DEV={0}".format(dev))
+        # xpl param config => xpl unique reference of the created device
+        refName="ref"+cur_jdtid
+        
+        # delete existing devices for this plugin on this host
+        client_id = "{0}-{1}.{2}".format("plugin", name, get_sanitized_hostname())
+        try:
+            td.del_devices_by_client(client_id)
+        except: 
+            print(u"Error while deleting all the test device for the client id '{0}' : {1}".format(client_id, traceback.format_exc()))
+            sys.exit(1)
+
+        # create a test device
+        try:
+            params = td.get_params(client_id, cur_jdtid)
+       
+            print("DEV_ID={0}".format(cur_jdtid))
             # fill in the params
-            params["device_type"] = "ping.ping"
-            params["name"] = "test_device_ping_{0}_é".format(dev)
+            params["device_type"] = cur_jdtid
+            params["name"] = "test_device_diabox_{0}_".format(cur_jdtid)
             params["reference"] = "reference"
             params["description"] = "description"
             # global params
@@ -134,36 +132,36 @@ if __name__ == "__main__":
             # so the parameters are configured on xpl_stats level
             for the_param in params['global']:
                 if the_param['key'] == "interval":
-                    the_param['value'] = 10
-            #for the_param in params['xpl_stats']['ping']:
+                    the_param['value'] = interval           #cannot be <60
             for the_param in params['xpl']:
                 if the_param['key'] == "device":
-                    the_param['value'] = dev
+                    the_param['value'] = refName
             # create
             device_id = td.create_device(params)['id']
-            devices[dev] = device_id
+            diabox_json_dev_type_id[cur_jdtid] = { "dev_id" :device_id, "ref_xpl" : refName }
 
-    except:
-        print(u"Error while creating the test devices : {0}".format(traceback.format_exc()))
-        sys.exit(1)
 
-    
-    ### prepare and run the test suite
-    suite = unittest.TestSuite()
-    # check domogik is running, configure the plugin
-    suite.addTest(PingTestCase("test_0001_domogik_is_running", xpl_plugin, name, cfg))
-    suite.addTest(PingTestCase("test_0010_configure_the_plugin", xpl_plugin, name, cfg))
-    
-    # start the plugin
-    suite.addTest(PingTestCase("test_0050_start_the_plugin", xpl_plugin, name, cfg))
+        except:
+            print(u"Error while creating the test devices : {0}".format(traceback.format_exc()))
+            sys.exit(1)
 
-    # do the specific plugin tests
-    suite.addTest(PingTestCase("test_0100_ping_on", xpl_plugin, name, cfg))
-    suite.addTest(PingTestCase("test_0101_ping_off", xpl_plugin, name, cfg))
+        
+        ### prepare and run the test suite
+        suite = unittest.TestSuite()
+        # check domogik is running, configure the plugin
+        suite.addTest(DiaboxTestCase("test_0001_domogik_is_running", xpl_plugin, name, cfg))
+        suite.addTest(DiaboxTestCase("test_0010_configure_the_plugin", xpl_plugin, name, cfg))
+        
+        # start the plugin
+        suite.addTest(DiaboxTestCase("test_0050_start_the_plugin", xpl_plugin, name, cfg))
+
+        # do the specific plugin tests
+        suite.addTest(DiaboxTestCase("test_0100_checkThatWeGetDataFromStation", xpl_plugin, name, cfg))
+
 
     # do some tests comon to all the plugins
     #suite.addTest(PingTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
-    suite.addTest(PingTestCase("test_9990_stop_the_plugin", xpl_plugin, name, cfg))
+    suite.addTest(DiaboxTestCase("test_9990_stop_the_plugin", xpl_plugin, name, cfg))
     
     # quit
     res = unittest.TextTestRunner().run(suite)

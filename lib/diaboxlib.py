@@ -72,7 +72,7 @@ class DiaboxLib():
             @param log : log instance
             @param callback : callback
             @param stop : stop
-            @param dev_type : domogik device_type_id (ex : diabox.minou / diabox.wrach) configured in info.json
+            @param dbx_dev_type : domogik device_type_id (ex : diabox.minou / diabox.wrach) configured in info.json
             @param domogik_dev_id : the id of the created device in domogik
             @param interval : the time in seconds between two requests of data for the current diabox station
             @param domogik_xpl_uid : the xpl unique identifier configured for each station (xPL parameters when creating a device). This value MUST be unique !

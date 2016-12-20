@@ -130,6 +130,11 @@ class DiaboxManager(XplPlugin):
         msg.add_data({"type" : sensor_type })
         msg.add_data({"current" : sensor_value})
 
+        self.log.debug("bin/diabox.py => sending xpl msg -----|||||||||||------------|||||||||||-------|||||||-------")
+        self.log.debug("{}".format(msg))
+
+
+
         try:
             self.log.debug("Now trying to send the xpl msg...")
             self.myxpl.send(msg)
