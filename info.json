@@ -58,7 +58,7 @@
 		},
 		"current_wind_speed_kts": {
 		    "name": "wind_speed_kts",
-		    "data_type": "DT_Speed",
+		    "data_type": "DT_ktsSpeed",
 		    "conversion": "",
 		    "incremental": false,
 		    "timeout": 0,

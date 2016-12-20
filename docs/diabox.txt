@@ -9,6 +9,10 @@ Purpose
 
 The Diabox plugin is used to monitor diabox weather station in live. Each station has different kind of sensors : temperature, pressure, humidity, wind speed and direction, rain rate. Most of the available station have all these sensors, but it's not always true.
 
+Interesting links about Diabox :
+*(fr) http://data.diabox.com/
+
+
 Dependencies
 ============
 
