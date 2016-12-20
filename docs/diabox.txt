@@ -10,7 +10,7 @@ Purpose
 The Diabox plugin is used to monitor diabox weather station in live. Each station has different kind of sensors : temperature, pressure, humidity, wind speed and direction, rain rate. Most of the available station have all these sensors, but it's not always true.
 
 Interesting links about Diabox :
-*(fr) http://data.diabox.com/
+*(fr) http://data.diabox.com/ 
 
 
 Dependencies
@@ -29,11 +29,11 @@ Create the domogik devices
 Domogik device type : diabox.diabox_name
 -----------------------------------------
 
-There are one device per diabox station, but the configuration is the same for each.
+There is one device declared per diabox station, but the configuration is exactly the same for each device.
 
-Here take the example with the device *diabox.minou* (Phare du Minou (29))
+Here is the example with the device *diabox.minou* (Phare du Minou (29))
 
-2 parameters are needed for a domogik device creation:
+2 parameters are needed for a domogik device creation :
 
 ===================== =========================== ======================================================================
 Key                   Type                        Description
@@ -46,7 +46,8 @@ interval              number                      The time in seconds between ea
 Start the plugin
 ================
 
-You can now start the plugin (start button) and use the created domogik devices. If you created a new device after you stared the plugin, you need to stop & start the plugin again.
+You can now start the plugin (start button) and use the created domogik devices. 
+If you created a new device after you started the plugin, you need to stop & start the plugin again.
 
 Set up your widgets on the user interface
 =========================================

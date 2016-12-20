@@ -6,13 +6,14 @@ Interval limitation
 ===================
 
 The refresh limitation of 60 seconds between 2 requests for the same diabox station is hard coded.
+It's simply to prevent user to be too greedy... a so prevent server overloading.
 
 How to add a new diabox station 
 ===============================
 
 That's quick easy : 
-* edit the info.json and add your device with his sensors
-* edit the lib/diaboxconfig.py and add your station on top of the file
+* Edit the info.json and add your device with his sensors
+* Edit the lib/diaboxconfig.py and add your station on top of the file
 
 Each diabox station has her own config (remote identifier and remote variable name). That's why there is no common variable.
 
@@ -21,7 +22,7 @@ Wind unit : knot
 
 The diabox are commonly used by sailors, so the wind speed unit is in *knots (kts)* by default. If you want to have it in km/h, you must multiply this value by 1.835
 
-*Exemple : 25 knots * 1.835 = 46 km/h
+* Example : 25 knots x 1.835 = 46 km/h
 
 xPL messages
 ============
