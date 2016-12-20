@@ -40,7 +40,7 @@ The **sensor.basic** message is used: ::
     sensor.basic
     {
     type=<one of these sensors : temperature, humidity, windspeed, winddirection, pressure, rainrate>
-    device=<device_uid>
+    device=<device_xpl_ref_device_id>
     current=<value>
     }
 
