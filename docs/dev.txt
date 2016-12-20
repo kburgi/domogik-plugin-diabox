@@ -11,9 +11,10 @@ It's simply to prevent user to be too greedy... a so prevent server overloading.
 How to add a new diabox station 
 ===============================
 
-That's quick easy : 
-* Edit the info.json and add your device with his sensors
-* Edit the lib/diaboxconfig.py and add your station on top of the file
+That's quick easy :
+ 
+* edit the info.json and add your device with his sensors
+* edit the lib/diaboxconfig.py and add your station on top of the file
 
 Each diabox station has her own config (remote identifier and remote variable name). That's why there is no common variable.
 
